@@ -1255,7 +1255,7 @@
        */
       hideEl: function(element) {
         return element.css({
-          opacity: 0
+          display: 'none'
         });
       },
 
@@ -1271,7 +1271,7 @@
         }
 
         return element.css({
-          opacity: 1
+          display: ''
         });
       },
 
