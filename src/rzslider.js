@@ -27,7 +27,7 @@
 
 }(this, function(angular) {
   'use strict';
-  var module = angular.module('rzModule', [])
+  var module = angular.module('rzModule', ['ngSanitize'])
 
   .factory('RzSliderOptions', function() {
     var defaultOptions = {
@@ -766,7 +766,7 @@
           label.rzsv = valStr;
         }
 
-        label.html(valStr);
+        this.scope[which + 'Label'] = valStr;
 
         // Update width only when length of the label have changed
         if (getDimension) {
