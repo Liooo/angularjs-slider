@@ -341,10 +341,45 @@
       rz-slider-options="slider_all_options.options"
     ></rzslider>
   </article>
+
+  <article>
+    <h2>Slider with angular directive in label using custom template</h2>
+    <rzslider
+            data-rz-slider-model="directiveLabel.minValue"
+            data-rz-slider-high="directiveLabel.maxValue"
+            data-rz-slider-options="directiveLabel.options"
+            data-rz-slider-tpl-url ="customLabelSlider.html"
+    ></rzslider>
+    <script type="text/ng-template" id="customLabelSlider.html">
+      <div class="rzslider">
+        <span class="rz-bar-wrapper"><span class="rz-bar"></span></span> <!-- // 0 The slider bar -->
+        <span class="rz-bar-wrapper"> <span class="rz-bar rz-selection" ng-style="barStyle"></span> </span> <!-- // 1 Highlight between two handles -->
+        <span class="rz-pointer rz-pointer-min" ng-style=minPointerStyle></span> <!-- // 2 Left slider handle -->
+        <span class="rz-pointer rz-pointer-max" ng-style=maxPointerStyle></span> <!-- // 3 Right slider handle -->
+        <span class="rz-bubble rz-limit rz-floor" ng-bind-html="floorLabel"></span> <!-- // 4 Floor label -->
+        <span class="rz-bubble rz-limit rz-ceil" ng-bind-html="ceilLabel"></span> <!-- // 5 Ceiling label -->
+        <span class="rz-bubble"><clickable-label label="modelLabel"></clickable-label></span> <!-- // 6 Label above left slider handle -->
+        <span class="rz-bubble"><clickable-label label="highLabel"></clickable-label></span> <!-- // 7 Label above right slider handle -->
+        <span class="rz-bubble"><clickable-label label="cmbLabel"></clickable-label></span> <!-- // 8 Range label when the slider handles are close ex. 15 - 17 -->
+        <ul ng-show="showTicks" class="rz-ticks"> <!-- // 9 The ticks -->
+          <li ng-repeat="t in ticks track by $index" class="rz-tick"
+              ng-class="{'rz-selected': t.selected}" ng-style="t.style"
+              ng-attr-uib-tooltip="{{ t.tooltip }}" ng-attr-tooltip-placement="{{t.tooltipPlacement}}"
+              ng-attr-tooltip-append-to-body="{{ t.tooltip ? true : undefined}}">
+    <span ng-if="t.value != null" class="rz-tick-value"
+          ng-attr-uib-tooltip="{{ t.valueTooltip }}"
+          ng-attr-tooltip-placement="{{t.valueTooltipPlacement}}">{{ t.value }}</span>
+            <span ng-if="t.legend != null" class="rz-tick-legend">{{ t.legend }}</span>
+          </li>
+        </ul>
+      </div>
+    </script>
+  </article>
 </div>
 
 </body>
 <script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="./lib/ui-bootstrap-tpls.js"></script>
 <script src="../dist/rzslider.js"></script>
 <script src="demo.js"></script>

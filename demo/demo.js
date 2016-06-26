@@ -495,11 +495,38 @@ app.controller('MainCtrl', function($scope, $rootScope, $timeout, $modal) {
       showTicksValues: false
     }
   };
+
+
+  //Directive label
+  $scope.directiveLabel = {
+    minValue: 10,
+    maxValue: 90,
+    options: {
+      floor: 0,
+      ceil: 100,
+      step: 1
+    }
+  };
+
   $scope.toggleHighValue = function() {
     if ($scope.slider_all_options.maxValue != null) {
       $scope.slider_all_options.maxValue = undefined;
     } else {
       $scope.slider_all_options.maxValue = 8;
+    }
+  }
+});
+
+app.directive('clickableLabel', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: {label: '='},
+    template: '<button ng-click="click()">{{label}}</button>',
+    link: function(scope, elem, attrs){
+      scope.click = function(){
+        alert(scope.label);
+      }
     }
   }
 });
