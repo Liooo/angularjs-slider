@@ -1,7 +1,7 @@
 /*! angularjs-slider - v4.0.2 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-06-07 */
+ 2016-06-27 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -1255,7 +1255,8 @@
        */
       hideEl: function(element) {
         return element.css({
-          opacity: 0
+          opacity: 0,
+          visibility: 'hidden'
         });
       },
 
@@ -1271,7 +1272,8 @@
         }
 
         return element.css({
-          opacity: 1
+          opacity: 1,
+          visibility: 'visible'
         });
       },
 
