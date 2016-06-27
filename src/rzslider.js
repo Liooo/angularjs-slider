@@ -766,7 +766,8 @@
           label.rzsv = valStr;
         }
 
-        label.html(valStr);
+        if(label.hasClass('inject-label')) label.html(valStr);
+        this.scope[which + 'Label'] = valStr;
 
         // Update width only when length of the label have changed
         if (getDimension) {
