@@ -403,6 +403,37 @@
           }
         });
 
+
+        var updateHandlerLabel = function(label){
+          var handler = (label == 'minLab') ? 'minH' : 'maxH';
+          var value = (label == 'minLab') ? 'lowValue' : 'highValue';
+          var which = (label == 'minLab') ? 'model' : 'high';
+          var offset = self.getPosition(self[handler]);
+          self.translateFn(self[value], self[label], which);
+          self.setPosition(self[label], self.getHandleLabelPos(label, offset));
+        };
+
+        [
+          ['cmbLab', angular.bind(self, self.updateCmbLabel)],
+          ['flrLab', angular.bind(self, self.updateFloorLab)],
+          ['ceilLab', angular.bind(self, self.updateCeilLab)],
+          ['minLab', angular.bind(self, updateHandlerLabel, 'minLab')],
+          ['maxLab', angular.bind(self, updateHandlerLabel, 'maxLab')]
+        ].forEach(function(pair){
+          var label = pair[0], func = pair[1];
+          self.scope.$watch(
+            function() {
+              if(!self[label]) return null;
+              return self.getDimension(self[label]);
+            },
+            function(d){
+              if(d === null) return;
+              self[label].rzsd = d;
+              func();
+            }
+          );
+        });
+
         this.scope.$on('$destroy', function() {
           self.unbindEvents();
           angular.element($window).off('resize', calcDimFn);
@@ -1283,6 +1314,14 @@
       },
 
       /**
+       * Get element left/top offset depending on whether slider is horizontal or vertical
+       */
+      getPosition: function(elem) {
+        var pos = elem.css(this.positionProperty).replace('px', '');
+        return parseFloat(pos);
+      },
+
+      /**
        * Set element left/top offset depending on whether slider is horizontal or vertical
        *
        * @param {jqLite} elem The jqLite wrapped DOM element
@@ -1962,7 +2001,7 @@
         }
         return newValue;
       },
-
+      
       /**
        * Apply the model values using scope.$apply.
        * We wrap it with the internalChange flag to avoid the watchers to be called
